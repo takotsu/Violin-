@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>メロディマスター</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- VexFlowライブラリの読み込み -->
+    <script src="https://unpkg.com/vexflow/releases/vexflow-min.js"></script>
+    <!-- WaveSurfer.jsライブラリの読み込み -->
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <!-- WaveSurfer.jsのマイクプラグイン -->
+    <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>メロディマスター</h1>
+
+        <!-- メニュー画面 -->
+        <div id="menu" class="section visible">
+            <input type="text" id="username" placeholder="ユーザーネームを入力" required>
+            <button id="start-game">ゲーム開始！</button>
+            <button id="view-highscore">ハイスコアを見る</button>
+            <button id="challenge-mode">チャレンジモード</button>
+        </div>
+
+        <!-- ゲーム画面 -->
+        <div id="game-area" class="section hidden">
+            <div class="game-controls">
+                <label for="scale">音階を選択してください:</label>
+                <select id="scale">
+                    <option value="C">Cメジャー (簡単)</option>
+                    <option value="G">Gメジャー (中級)</option>
+                    <option value="D">Dメジャー (難しい)</option>
+                    <option value="A">Aマイナー (挑戦)</option>
+                    <option value="E">Eマイナー (上級)</option>
+                    <option value="F">Fメジャー</option>
+                    <option value="Bb">B♭メジャー</option>
+                    <option value="Eb">E♭メジャー</option>
+                </select>
+                <button id="select-scale">決定</button>
+            </div>
+            <div class="game-controls hidden" id="tuning-area">
+                <div class="tempo-control">
+                    <label for="tempo">テンポ (BPM): <span id="tempo-value">120</span></label>
+                    <input type="range" id="tempo" min="40" max="200" value="120">
+                </div>
+                <div class="note-duration-control">
+                    <label for="note-duration">音符の長さ:</label>
+                    <select id="note-duration">
+                        <option value="eighth">八分音符</option>
+                        <option value="quarter">四分音符</option>
+                    </select>
+                </div>
+                <button id="start-performance">演奏開始！</button>
+                <div id="tuning-result">現在の音程: <span id="frequency">-</span> Hz</div>
+                <div id="score-board">スコア: <span id="score">0</span></div>
+                <div id="note-display">
+                    <h3>次の音を弾いてください:</h3>
+                    <div id="vexflow-container"></div>
+                </div>
+                <div id="waveform-container"></div>
+                <div class="game-buttons">
+                    <button id="pause-game">ポーズ</button>
+                    <button id="back-to-menu-game">メニューに戻る</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ハイスコア画面 -->
+        <div id="highscore-area" class="section hidden">
+            <h2>ハイスコア</h2>
+            <div id="highscore-list">ハイスコアはまだありません。</div>
+            <button id="back-to-menu-highscore">メニューに戻る</button>
+        </div>
+
+        <!-- チャレンジモード画面 -->
+        <div id="challenge-area" class="section hidden">
+            <h2>チャレンジモード</h2>
+            <button id="start-challenge">チャレンジ開始！</button>
+            <div id="challenge-result" class="hidden">
+                チャレンジ結果: <span id="challenge-score">0</span> 点
+            </div>
+            <button id="back-to-menu-challenge">メニューに戻る</button>
+        </div>
+    </div>
+
+    <div id="mask" class="hidden"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
