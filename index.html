@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>メロディマスター</title>
+    <title>弦楽器音階マスター</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- VexFlowライブラリの読み込み -->
     <script src="https://unpkg.com/vexflow/releases/vexflow-min.js"></script>
@@ -14,43 +14,67 @@
 </head>
 <body>
     <div class="container">
-        <h1>メロディマスター</h1>
+        <h1>弦楽器音階マスター</h1>
 
         <!-- メニュー画面 -->
         <div id="menu" class="section visible">
             <input type="text" id="username" placeholder="ユーザーネームを入力" required>
             <button id="start-game">ゲーム開始！</button>
+            <button id="options-button">オプション</button>
             <button id="view-highscore">ハイスコアを見る</button>
-            <button id="challenge-mode">チャレンジモード</button>
+        </div>
+
+        <!-- オプション画面 -->
+        <div id="options-area" class="section hidden">
+            <h2>オプション</h2>
+            <div class="option-item">
+                <label for="metronome-sound">メトロノームの音:</label>
+                <select id="metronome-sound">
+                    <option value="metronome1.mp3">音1</option>
+                    <option value="metronome2.mp3">音2</option>
+                    <option value="metronome3.mp3">音3</option>
+                </select>
+                <button id="test-metronome-sound">テスト</button>
+            </div>
+            <div class="option-item">
+                <label for="metronome-volume">メトロノームの音量:
+                    <span id="volume-value">0.5</span>
+                </label>
+                <input type="range" id="metronome-volume" min="0" max="1" step="0.01" value="0.5">
+            </div>
+            <div class="option-item">
+                <label for="font-size">文字の大きさ:</label>
+                <select id="font-size">
+                    <option value="small">小</option>
+                    <option value="medium" selected>中</option>
+                    <option value="large">大</option>
+                </select>
+            </div>
+            <div class="option-item">
+                <label for="background-style">背景のスタイル:</label>
+                <select id="background-style">
+                    <option value="sakura">桜</option>
+                    <option value="washi">和紙</option>
+                    <option value="ukiyoe">浮世絵</option>
+                </select>
+            </div>
+            <!-- 他の便利機能をここに追加 -->
+            <button id="back-to-menu-options">メニューに戻る</button>
         </div>
 
         <!-- ゲーム画面 -->
         <div id="game-area" class="section hidden">
             <div class="game-controls">
-                <label for="scale">音階を選択してください:</label>
-                <select id="scale">
-                    <option value="C">Cメジャー (簡単)</option>
-                    <option value="G">Gメジャー (中級)</option>
-                    <option value="D">Dメジャー (難しい)</option>
-                    <option value="A">Aマイナー (挑戦)</option>
-                    <option value="E">Eマイナー (上級)</option>
-                    <option value="F">Fメジャー</option>
-                    <option value="Bb">B♭メジャー</option>
-                    <option value="Eb">E♭メジャー</option>
-                </select>
-                <button id="select-scale">決定</button>
+                <h2>音階を選択してください</h2>
+                <div class="scale-tiles">
+                    <!-- スケールボタンを動的に生成 -->
+                </div>
+                <button id="select-scale" disabled>決定</button>
             </div>
             <div class="game-controls hidden" id="tuning-area">
                 <div class="tempo-control">
                     <label for="tempo">テンポ (BPM): <span id="tempo-value">120</span></label>
                     <input type="range" id="tempo" min="40" max="200" value="120">
-                </div>
-                <div class="note-duration-control">
-                    <label for="note-duration">音符の長さ:</label>
-                    <select id="note-duration">
-                        <option value="eighth">八分音符</option>
-                        <option value="quarter">四分音符</option>
-                    </select>
                 </div>
                 <button id="start-performance">演奏開始！</button>
                 <div id="tuning-result">現在の音程: <span id="frequency">-</span> Hz</div>
@@ -61,7 +85,6 @@
                 </div>
                 <div id="waveform-container"></div>
                 <div class="game-buttons">
-                    <button id="pause-game">ポーズ</button>
                     <button id="back-to-menu-game">メニューに戻る</button>
                 </div>
             </div>
@@ -73,19 +96,7 @@
             <div id="highscore-list">ハイスコアはまだありません。</div>
             <button id="back-to-menu-highscore">メニューに戻る</button>
         </div>
-
-        <!-- チャレンジモード画面 -->
-        <div id="challenge-area" class="section hidden">
-            <h2>チャレンジモード</h2>
-            <button id="start-challenge">チャレンジ開始！</button>
-            <div id="challenge-result" class="hidden">
-                チャレンジ結果: <span id="challenge-score">0</span> 点
-            </div>
-            <button id="back-to-menu-challenge">メニューに戻る</button>
-        </div>
     </div>
-
-    <div id="mask" class="hidden"></div>
 
     <script src="script.js"></script>
 </body>
